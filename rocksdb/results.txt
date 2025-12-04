@@ -1,0 +1,9 @@
+python3 zombie_curve.py femu_stats.csv rocksdb
+Active blocks: 12224
+Zombie blocks: 1883
+Zombie %: 15.4%
+Saved: rocksdb_zombie.png
+
+WAF: 4.733 (Physical: 63014154240, Logical: 13312000000)
+
+GC events: 2

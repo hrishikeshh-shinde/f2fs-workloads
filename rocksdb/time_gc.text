@@ -1,0 +1,34 @@
+time spent in gc:
+
+f2fs_gc-259:0-1162    [006] ....   496.716217: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes =
+   f2fs_gc-259:0-1162    [006] ....   496.716740: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
+   f2fs_gc-259:0-1162    [006] ....   558.155130: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes =
+   f2fs_gc-259:0-1162    [006] ....   558.155515: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
+   f2fs_gc-259:0-1162    [006] ....   619.594657: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes =
+   f2fs_gc-259:0-1162    [006] ....   619.595638: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
+   f2fs_gc-259:0-1162    [006] ....   681.033192: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes =
+   f2fs_gc-259:0-1162    [006] ....   681.034089: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
+   f2fs_gc-259:0-1162    [006] ....   742.471448: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes =
+   f2fs_gc-259:0-1162    [006] ....   742.472443: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
+   f2fs_gc-259:0-1162    [006] ....   803.908996: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes =
+   f2fs_gc-259:0-1162    [006] ....   803.909523: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
+   f2fs_gc-259:0-1162    [006] ....   865.346652: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes =
+   f2fs_gc-259:0-1162    [006] ....   865.347149: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
+   f2fs_gc-259:0-1162    [006] ....   926.784182: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes =
+   f2fs_gc-259:0-1162    [006] ....   926.784826: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
+   f2fs_gc-259:0-1162    [006] ....   988.221480: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes =
+   f2fs_gc-259:0-1162    [006] ....   988.221708: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
+   f2fs_gc-259:0-1162    [006] ....  1049.659844: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes =
+   f2fs_gc-259:0-1162    [006] ....  1049.660279: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
+   f2fs_gc-259:0-1162    [006] ....  1111.100324: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes =
+   f2fs_gc-259:0-1162    [006] ....  1111.100573: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
+   f2fs_gc-259:0-1162    [006] ....  1233.979817: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes 0
+   f2fs_gc-259:0-1162    [006] ....  1233.980381: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
+   f2fs_gc-259:0-1162    [006] ....  1295.418866: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes =
+   f2fs_gc-259:0-1162    [006] ....  1295.419240: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
+   f2fs_gc-259:0-1162    [006] ....  1418.296258: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes =
+   f2fs_gc-259:0-1162    [006] ....  1418.296760: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
+   f2fs_gc-259:0-1162    [006] ....  1479.734632: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes =
+   f2fs_gc-259:0-1162    [006] ....  1479.734840: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
+   f2fs_gc-259:0-1162    [006] ....  1602.611079: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes =
+   f2fs_gc-259:0-1162    [006] ....  1602.611835: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
