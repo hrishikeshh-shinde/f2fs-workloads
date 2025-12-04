@@ -1,0 +1,13 @@
+Active blocks: 12224
+Zombie blocks: 19
+Zombie %: 0.2%
+Saved: leveldb_zombie.png
+
+Using actual DB size: 6539052999 bytes
+
+RESULTS:
+Physical writes: 172049039360 bytes (160.23 GB)
+Logical writes:  6539052999 bytes (6.08 GB)
+Write Amplification: 26.311
+
+GC events: 1 

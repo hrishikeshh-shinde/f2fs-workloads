@@ -1,0 +1,88 @@
+F2FS-tools: mkfs.f2fs Ver: 1.11.0 (2018-07-10)
+
+Info: Disable heap-based policy
+Info: Debug level = 0
+Info: Label = 
+Info: Trim is enabled
+Info: Segments per section = 1
+Info: Sections per zone = 1
+Info: sector size = 512
+Info: total sectors = 33554432 (16384 MB)
+Info: zone aligned segment0 blkaddr: 512
+Info: format version with
+  "Linux version 5.4.0-216-generic (buildd@lcy02-amd64-014) (gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2)) #
+Info: [/dev/nvme0n1] Discarding device
+Info: This device doesn't support BLKSECDISCARD
+Info: Discarded 16384 MB
+Info: Overprovision ratio = 1.570%
+Info: Overprovision segments = 260 (GC reserved = 135)
+Info: format successful
+LevelDB:    version 1.23
+Date:       Thu Dec  4 19:45:13 2025
+CPU:        8 * Intel(R) Xeon(R) CPU E5-2660 v3 @ 2.60GHz
+CPUCache:   16384 KB
+Keys:       16 bytes each
+Values:     1024 bytes each (512 bytes after compression)
+Entries:    10000000
+RawSize:    9918.2 MB (estimated)
+FileSize:   5035.4 MB (estimated)
+------------------------------------------------
+fillrandom   :     123.926 micros/op;   16.0 MB/s      
+LevelDB:    version 1.23
+Date:       Thu Dec  4 20:05:56 2025
+CPU:        8 * Intel(R) Xeon(R) CPU E5-2660 v3 @ 2.60GHz
+CPUCache:   16384 KB
+Keys:       16 bytes each
+Values:     100 bytes each (50 bytes after compression)
+Entries:    1000000
+RawSize:    110.6 MB (estimated)
+FileSize:   62.9 MB (estimated)
+------------------------------------------------
+overwrite    :      30.380 micros/op;    7.3 MB/s     
+LevelDB:    version 1.23
+Date:       Thu Dec  4 20:06:27 2025
+CPU:        8 * Intel(R) Xeon(R) CPU E5-2660 v3 @ 2.60GHz
+CPUCache:   16384 KB
+Keys:       16 bytes each
+Values:     100 bytes each (50 bytes after compression)
+Entries:    1000000
+RawSize:    110.6 MB (estimated)
+FileSize:   62.9 MB (estimated)
+------------------------------------------------
+overwrite    :      16.879 micros/op;   13.0 MB/s     
+LevelDB:    version 1.23
+Date:       Thu Dec  4 20:06:44 2025
+CPU:        8 * Intel(R) Xeon(R) CPU E5-2660 v3 @ 2.60GHz
+CPUCache:   16384 KB
+Keys:       16 bytes each
+Values:     100 bytes each (50 bytes after compression)
+Entries:    1000000
+RawSize:    110.6 MB (estimated)
+FileSize:   62.9 MB (estimated)
+------------------------------------------------
+overwrite    :      14.058 micros/op;   15.5 MB/s     
+LevelDB:    version 1.23
+Date:       Thu Dec  4 20:06:59 2025
+CPU:        8 * Intel(R) Xeon(R) CPU E5-2660 v3 @ 2.60GHz
+CPUCache:   16384 KB
+Keys:       16 bytes each
+Values:     100 bytes each (50 bytes after compression)
+Entries:    2000000
+RawSize:    221.3 MB (estimated)
+FileSize:   125.9 MB (estimated)
+------------------------------------------------
+deleterandom :       2.802 micros/op;                 
+GC cycles: 0
+Adding emergency writes...
+LevelDB:    version 1.23
+Date:       Thu Dec  4 20:07:04 2025
+CPU:        8 * Intel(R) Xeon(R) CPU E5-2660 v3 @ 2.60GHz
+CPUCache:   16384 KB
+Keys:       16 bytes each
+Values:     100 bytes each (50 bytes after compression)
+Entries:    2000000
+RawSize:    221.3 MB (estimated)
+FileSize:   125.9 MB (estimated)
+------------------------------------------------
+overwrite    :       5.201 micros/op;   21.3 MB/s     
+Logical: 12 GB

@@ -1,0 +1,5 @@
+GC events: 1                                                                   e
+   f2fs_gc-259:0-1179    [004] ....  1426.809484: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes 3
+   f2fs_gc-259:0-1179    [004] ....  1426.810295: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
+   f2fs_gc-259:0-1179    [004] ....  1488.248401: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes =
+   f2fs_gc-259:0-1179    [004] ....  1488.249619: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
