@@ -1,0 +1,16 @@
+Setup:
+
+-> FEMU emulator with 16GB SSD
+-> F2FS filesystem (formatted fresh for each test)
+
+Identical workload for all engines:
+
+-> Phase 1: Insert 10 million 1KB records (10GB cold data)
+-> Phase 2: Update 1 million records 3 times (3GB hot updates)
+-> Total: 13GB logical writes per engine
+
+Metrics collected:
+
+-> Zombie blocks (% with 30-70% invalid pages) - from FEMU block stats
+-> Write Amplification (WAF) - physical writes / logical writes
+-> GC time - from F2FS kernel tracepoints
