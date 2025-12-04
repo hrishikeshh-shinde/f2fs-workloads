@@ -1,0 +1,7 @@
+Active blocks: 14272
+Zombie blocks: 0
+Zombie %: 0.0%
+
+WAF: 4.579
+Physical: 60962181120, Logical: 13312000000
+GC events: 4
