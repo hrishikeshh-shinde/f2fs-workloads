@@ -1,0 +1,10 @@
+GC events: 4                                                                   e
+   f2fs_gc-259:0-1417    [001] ....  1502.566723: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes =
+   f2fs_gc-259:0-1417    [001] ....  1502.567064: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
+   f2fs_gc-259:0-1417    [001] ....  1564.005909: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes =
+   f2fs_gc-259:0-1417    [001] ....  1564.007048: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
+   f2fs_gc-259:0-1417    [001] ....  1625.445065: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes =
+   f2fs_gc-259:0-1417    [001] ....  1625.446154: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
+   f2fs_gc-259:0-1417    [002] ....  1686.884220: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes =
+   f2fs_gc-259:0-1417    [002] ....  1686.886587: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
+

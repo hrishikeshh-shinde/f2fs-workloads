@@ -1,0 +1,10 @@
+Active blocks: 14144
+Zombie blocks: 0
+Zombie %: 0.0%
+Saved: sqlite_wal_zombie.png
+
+WAF: 4.850
+Physical: 74502819840, Logical: 15360000000
+GC WAF component: 3.850
+
+GC events: 4
