@@ -1,12 +1,4 @@
-GC events: 4                                                                   e
-   f2fs_gc-259:0-1204    [004] ....   943.813305: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes n
-   f2fs_gc-259:0-1204    [004] ....   943.813689: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
-   f2fs_gc-259:0-1204    [004] ....  1005.252452: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes 8
-   f2fs_gc-259:0-1204    [004] ....  1005.253140: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
-   f2fs_gc-259:0-1204    [004] ....  1066.691328: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes e
-   f2fs_gc-259:0-1204    [004] ....  1066.693218: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
-   f2fs_gc-259:0-1204    [004] ....  1128.130167: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes =
-   f2fs_gc-259:0-1204    [004] ....  1128.132149: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed =
-   f2fs_gc-259:0-1204    [004] ....  1189.569067: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes =
-   f2fs_gc-259:0-1204    [004] ....  1189.569466: f2fs_gc_end: dev = (259,0), ret = 0, seg_freed = 0, sec_freed f
+grep "f2fs_gc_begin" /sys/kernel/debug/tracing/trace
+   f2fs_gc-259:0-1191    [002] ....   816.547711: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes =
+   f2fs_gc-259:0-1191    [002] ....   877.986010: f2fs_gc_begin: dev = (259,0), sync = 0, background = 1, nodes =
 root@ubuntu:~# 

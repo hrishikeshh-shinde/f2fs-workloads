@@ -1,4 +1,6 @@
-F2FS-tools: mkfs.f2fs Ver: 1.11.0 (2018-07-10)
+=== SQLite DELETE Small Batch (1000) ===
+
+	F2FS-tools: mkfs.f2fs Ver: 1.11.0 (2018-07-10)
 
 Info: Disable heap-based policy
 Info: Debug level = 0
@@ -18,17 +20,29 @@ Info: Overprovision ratio = 1.570%
 Info: Overprovision segments = 260 (GC reserved = 135)
 Info: format successful
 delete
-Insert 10M rows...
+1. Insert 10M rows (batch 1000)...
+  1M rows, 88689 rows/sec
+  2M rows, 88747 rows/sec
+  3M rows, 88766 rows/sec
+  4M rows, 89048 rows/sec
+  5M rows, 89148 rows/sec
+  6M rows, 88699 rows/sec
+  7M rows, 88376 rows/sec
+  8M rows, 88047 rows/sec
+  9M rows, 87787 rows/sec
+  10M rows, 87618 rows/sec
+Insert completed: 10000000 rows in 114.1s
+2. Update 1M × 3 (batch 1000)...
+..........Traceback (most recent call last):
+  File "<string>", line 20, in <module>
+NameError: name 'r' is not defined
+..........Traceback (most recent call last):
+  File "<string>", line 20, in <module>
+NameError: name 'r' is not defined
+..........Traceback (most recent call last):
+  File "<string>", line 20, in <module>
+NameError: name 'r' is not defined
+3. Delete 2M rows (batch 1000)...
+.......... Deleted 2000000 rows, 7107 ops/sec
 
-Verify: 10000000 rows
-Update 1M × 3...
-..........
-..........
-..........
-Delete 2M rows...
-....................
-
-=== RESULTS ===
 GC cycles: 0
-Total GC time: 0.000s
-WAF: 4.578 (Physical: 56 GB, Logical: 12 GB)

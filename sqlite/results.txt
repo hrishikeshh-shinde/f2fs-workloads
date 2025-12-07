@@ -1,7 +1,10 @@
-Active blocks: 14272
-Zombie blocks: 0
-Zombie %: 0.0%
+ ./quick_waf_fixed.sh 
+WAF: 4.059
+Physical: 62354620416, Logical: 15360000000
+GC WAF component: 3.059
 
-WAF: 4.579
-Physical: 60962181120, Logical: 13312000000
-GC events: 4
+./check_gc.sh 
+GC events: 1
+
+Saved: sqlite_temporal.png
+Peak zombies: 0.4% at sample 14950000
