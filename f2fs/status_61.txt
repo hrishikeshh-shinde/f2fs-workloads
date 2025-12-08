@@ -1,0 +1,73 @@
+
+=====[ partition info(nvme0n1). #0, RW, CP: Good]=====
+[SB: 1] [CP: 2] [SIT: 2] [NAT: 36] [SSA: 16] [MAIN: 8135(OverProv:260 Resv:135)]
+
+Utilization: 50% (2040840 valid blocks, 1434 discard blocks)
+  - Node: 2006 (Inode: 2, Other: 2004)
+  - Data: 2038834
+  - Inline_xattr Inode: 1
+  - Inline_data Inode: 0
+  - Inline_dentry Inode: 0
+  - Orphan/Append/Update Inode: 0, 0, 0
+
+Main area: 8135 segs, 8135 secs 8135 zones
+  - COLD  data: 2032, 2032, 2032
+  - WARM  data: 4066, 4066, 4066
+  - HOT   data: 4251, 4251, 4251
+  - Dir   dnode: 0, 0, 0
+  - File   dnode: 4252, 4252, 4252
+  - Indir nodes: 2, 2, 2
+
+  - Valid: 221
+  - Dirty: 4031
+  - Prefree: 1
+  - Free: 3882 (3882)
+
+CP calls: 245 (BG: 0)
+  - cp blocks : 768
+  - sit blocks : 5054
+  - nat blocks : 391
+  - ssa blocks : 4312
+GC calls: 0 (BG: 0)
+  - data segments : 0 (0)
+  - node segments : 0 (0)
+Try to move 0 blocks (BG: 0)
+  - data blocks : 0 (0)
+  - node blocks : 0 (0)
+Skipped : atomic write 0 (0)
+BG skip : IO: 1, Other: 0
+
+Extent Cache:
+  - Hit Count: L1-1:488 L1-2:0 L2:0
+  - Hit Ratio: 0% (488 / 211760)
+  - Inner Struct Count: tree: 1(0), node: 0
+
+Balancing F2FS Async:
+  - DIO (R:    0, W:    0)
+  - IO_R (Data:    0, Node:    0, Meta:    0
+  - IO_W (CP:    0, Data:    0, Flush: (   0  673    1), Discard: (   0    0)) cmd: 58566 undiscard:132853
+  - inmem:    0, atomic IO:    0 (Max.    0), volatile IO:    0 (Max.    0)
+  - nodes:    0 in 2006
+  - dents:    1 in dirs:   1 (   1)
+  - datas:    0 in files:   0
+  - quota datas:    0 in quota files:   0
+  - meta:    2 in 4498
+  - imeta:    0
+  - NATs:       431/     2198
+  - SITs:       489/     8135
+  - free_nids:      2085/  4191270
+  - alloc_nids:         0
+
+Distribution of User Blocks: [ valid | invalid | free ]
+  [-------------------------|---|----------------------]
+
+IPU: 0 blocks
+SSR: 0 blocks in 0 segments
+LFS: 2209429 blocks in 4314 segments
+
+BDF: 92, avg. vblocks: 478
+
+Memory: 35054 KB
+  - static: 2489 KB
+  - cached: 6548 KB
+  - paged : 26016 KB

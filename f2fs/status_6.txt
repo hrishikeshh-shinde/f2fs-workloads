@@ -1,0 +1,73 @@
+
+=====[ partition info(nvme0n1). #0, RW, CP: Good]=====
+[SB: 1] [CP: 2] [SIT: 2] [NAT: 36] [SSA: 16] [MAIN: 8135(OverProv:260 Resv:135)]
+
+Utilization: 4% (200706 valid blocks, 1184 discard blocks)
+  - Node: 200 (Inode: 2, Other: 198)
+  - Data: 200506
+  - Inline_xattr Inode: 1
+  - Inline_data Inode: 0
+  - Inline_dentry Inode: 0
+  - Orphan/Append/Update Inode: 0, 0, 0
+
+Main area: 8135 segs, 8135 secs 8135 zones
+  - COLD  data: 2032, 2032, 2032
+  - WARM  data: 4066, 4066, 4066
+  - HOT   data: 211, 211, 211
+  - Dir   dnode: 0, 0, 0
+  - File   dnode: 419, 419, 419
+  - Indir nodes: 2, 2, 2
+
+  - Valid: 10
+  - Dirty: 412
+  - Prefree: 0
+  - Free: 7713 (7713)
+
+CP calls: 25 (BG: 0)
+  - cp blocks : 77
+  - sit blocks : 76
+  - nat blocks : 15
+  - ssa blocks : 416
+GC calls: 0 (BG: 0)
+  - data segments : 0 (0)
+  - node segments : 0 (0)
+Try to move 0 blocks (BG: 0)
+  - data blocks : 0 (0)
+  - node blocks : 0 (0)
+Skipped : atomic write 0 (0)
+BG skip : IO: 0, Other: 0
+
+Extent Cache:
+  - Hit Count: L1-1:48 L1-2:0 L2:0
+  - Hit Ratio: 0% (48 / 20852)
+  - Inner Struct Count: tree: 1(0), node: 0
+
+Balancing F2FS Async:
+  - DIO (R:    0, W:    0)
+  - IO_R (Data:    0, Node:    0, Meta:    0
+  - IO_W (CP:    0, Data:    0, Flush: (   0   68    1), Discard: (   0    0)) cmd: 5295 undiscard:11715
+  - inmem:    0, atomic IO:    0 (Max.    0), volatile IO:    0 (Max.    0)
+  - nodes:    0 in  200
+  - dents:    1 in dirs:   1 (   1)
+  - datas:    0 in files:   0
+  - quota datas:    0 in quota files:   0
+  - meta:    2 in  594
+  - imeta:    0
+  - NATs:       183/      225
+  - SITs:       289/     8135
+  - free_nids:       251/  4193076
+  - alloc_nids:         0
+
+Distribution of User Blocks: [ valid | invalid | free ]
+  [--|-|-----------------------------------------------]
+
+IPU: 0 blocks
+SSR: 0 blocks in 0 segments
+LFS: 214298 blocks in 418 segments
+
+BDF: 99, avg. vblocks: 477
+
+Memory: 6273 KB
+  - static: 2489 KB
+  - cached: 607 KB
+  - paged : 3176 KB
