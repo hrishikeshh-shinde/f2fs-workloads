@@ -2,7 +2,7 @@ sudo bpftrace -e '
 BEGIN {
     printf("inode,page_index,death_time_ms,timestamp\n");
     @start_ts = nsecs;
-    @pages_per_blk = 128;
+    @pages_per_blk = 1;
 }
 
 tracepoint:f2fs:f2fs_writepage {
@@ -31,22 +31,26 @@ END {
 }' > bpftrace_output2.csv &
 BPFTRACE_PID=$!
 
-DB_FILE="/mnt/f2fs/sqlite.db"
+DB_FILE0="/mnt/f2fs/sqlite.db"
+DB_FILE1="/mnt/f2fs/sqlite1.db"
 MODE="DELETE"
 
-rm -f $DB_FILE
+rm -f $DB_FILE1
+rm -f $DB_FILE0
 PYTHON_SCRIPT="
 import sqlite3, os, time, sys, random
-conn = sqlite3.connect('$DB_FILE')
+db = sys.argv[2]
+conn = sqlite3.connect(db)
 conn.execute('PRAGMA journal_mode=$MODE')
 conn.execute('PRAGMA synchronous=NORMAL')
 conn.execute('CREATE TABLE IF NOT EXISTS data (id INTEGER PRIMARY KEY, val BLOB)')
 
+byte_size = 1024
 # 1. INSERT CHUNK (Expand DB size)
 # Insert 100,000 rows (~100MB)
 c = conn.cursor()
 c.execute('BEGIN')
-blob = os.urandom(1024)
+blob = os.urandom(byte_size)
 start_id = int(sys.argv[1])
 for i in range(start_id, start_id + 200000):
     c.execute('INSERT INTO data VALUES (?, ?)', (i, blob))
@@ -57,8 +61,10 @@ c.execute('COMMIT')
 c.execute('BEGIN')
 for _ in range(200000):
     # Update random ID in current range
-    rid = random.randint(0, start_id + 5000)
-    c.execute('UPDATE data SET val=? WHERE id=?', (os.urandom(1024), rid))
+    x = random.randint(0, 10)
+    # rid = random.randint(0, start_id + 40000) if x < 6 else random.randint(start_id + 40000, start_id + 200000)
+    rid = random.randint(0, start_id + 200000)
+    c.execute('UPDATE data SET val=? WHERE id=?', (os.urandom(byte_size), rid))
     if _ % 100 == 0: # Frequent commits
         c.execute('COMMIT'); c.execute('BEGIN')
 c.execute('COMMIT')
@@ -70,8 +76,13 @@ conn.close()
 #     echo $j * 100000
 #     # python3 -c "$PYTHON_SCRIPT" $j * 100000
 # done
-python3 -c "$PYTHON_SCRIPT" 0
+python3 -c "$PYTHON_SCRIPT" 0 $DB_FILE0 &
+PYTHON_PID0=$!
+python3 -c "$PYTHON_SCRIPT" 0 $DB_FILE1 &
+PYTHON_PID1=$!
 
+wait $PYTHON_PID0
+wait $PYTHON_PID1
 
 echo "Stopping bpftrace"
 sudo kill -SIGINT $BPFTRACE_PID

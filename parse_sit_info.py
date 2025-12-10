@@ -1,66 +1,35 @@
-# enum log_type {
-# 	CURSEG_HOT_DATA	= 0,	/* directory entry blocks */
-# 	CURSEG_WARM_DATA,	/* data blocks */
-# 	CURSEG_COLD_DATA,	/* multimedia or GCed data blocks */
-# 	CURSEG_HOT_NODE,	/* direct node blocks of directory files */
-# 	CURSEG_WARM_NODE,	/* direct node blocks of normal files */
-# 	CURSEG_COLD_NODE,	/* indirect node blocks */
-# 	NR_PERSISTENT_LOG,	/* number of persistent log */
-# 	CURSEG_COLD_DATA_PINNED = NR_PERSISTENT_LOG,
-# 				/* pinned file that needs consecutive block address */
-# 	CURSEG_ALL_DATA_ATGC,	/* SSR alloctor in hot/warm/cold data area */
-# 	NO_CHECK_TYPE,		/* number of persistent & inmem log */
-# };
-
-import re
-from collections import Counter
-import math
-
-# --- 1. Define the Input Data (Replace this with file reading in a real scenario) ---
-f2fs_summary_data = """
-segno: 47466 vblocks: 0 seg_type:0 mtime:0 sit_pack:1
-segno: 100 vblocks: 512 seg_type:1 mtime:100 sit_pack:1
-segno: 200 vblocks: 256 seg_type:2 mtime:20 sit_pack:1
-segno: 300 vblocks: 400 seg_type:0 mtime:5 sit_pack:1
-segno: 400 vblocks: 50 seg_type:3 mtime:10 sit_pack:1  # seg_type not in (0,1,2)
-segno: 500 vblocks: 100 seg_type:1 mtime:0 sit_pack:1  # mtime not > 0
-segno: 600 vblocks: 128 seg_type:2 mtime:1 sit_pack:1
-segno: 700 vblocks: 512 seg_type:0 mtime:50 sit_pack:1
-"""
 import re
 import math
 import argparse
 from collections import Counter
-import os # Imported for checking if the file exists
+import os
+import matplotlib.pyplot as plt
 
 # --- Configuration ---
-MAX_VBLOCKS = 512  # Maximum number of valid blocks per segment (N_BLOCK_OF_SEGMENT)
-PARTITION_SIZE_PERCENT = 5  # Size of each bin in percentage (5%)
-DEFAULT_FILENAME = "dump_sit"
+MAX_VBLOCKS = 512  
+PARTITION_SIZE_PERCENT = 2 
+DEFAULT_FILENAME = "sit_info.txt"
+OUTPUT_CDF_IMAGE_FILE = "vblock_cdf_percentage.png" # Changed output file name
 
+# The existing parse_f2fs_summary function remains the same
 def parse_f2fs_summary(file_path):
     """
-    Reads summary data from the specified file path, parses lines,
-    filters entries, and calculates the percentage of valid blocks.
+    Reads summary data from the specified file path, parses lines, and filters entries.
     """
     
-    # Check if the file exists before attempting to open it
     if not os.path.exists(file_path):
         print(f"❌ Error: File not found at '{file_path}'")
         return None, 0
 
-    # Regular expression to capture the required fields
+    # Regular expression to capture the required fields: Segment no.: <segno>, Valid: <vblocks>, type: <seg_type>
     pattern = re.compile(
-        r'segno:\s*(?P<segno>\d+)'
-        r'.*vblocks:\s*(?P<vblocks>\d+)'
-        r'.*seg_type:\s*(?P<seg_type>\d+)'
-        r'.*mtime:\s*(?P<mtime>\d+)'
+        r'Segment no.:\s*(?P<segno>\d+)'
+        r'.*Valid:\s*(?P<vblocks>\d+)'
+        r'.*type:\s*(?P<seg_type>\d+)'
     )
 
     filtered_vblock_percentages = []
     total_lines_read = 0
-    
-    # Required filters
     valid_seg_types = {0, 1, 2}
 
     try:
@@ -70,15 +39,10 @@ def parse_f2fs_summary(file_path):
                 match = pattern.search(line)
                 
                 if match:
-                    # Convert captured strings to integers
                     vblocks = int(match.group('vblocks'))
                     seg_type = int(match.group('seg_type'))
-                    mtime = int(match.group('mtime'))
-
-                    # Apply Filtering Criteria
-                    if seg_type in valid_seg_types and mtime > 0:
-                        # Calculate percentage of valid blocks
-                        # Clamp vblocks at MAX_VBLOCKS just in case of corrupted data
+                    
+                    if seg_type in valid_seg_types:
                         vblocks_clamped = min(vblocks, MAX_VBLOCKS) 
                         vblock_percent = (vblocks_clamped / MAX_VBLOCKS) * 100
                         filtered_vblock_percentages.append(vblock_percent)
@@ -89,41 +53,101 @@ def parse_f2fs_summary(file_path):
         
     return filtered_vblock_percentages, total_lines_read
 
+
 def create_histogram(percentages, partition_size):
     """
-    Creates a histogram from the list of percentages with specified bin size.
+    Creates a standard frequency histogram and returns the raw sorted bins.
     """
     
     bin_counts = Counter()
     
     for p in percentages:
-        # Index 0: 0% <= p < 5%
-        # Index 19: 95% <= p <= 100%
-        
         if p == 100:
             bin_index = 19
         else:
-            bin_index = math.floor(p / partition_size)
+            bin_index = max(0, min(19, math.floor(p / partition_size))) 
             
-        # Create a user-friendly label for the bin
         bin_start = bin_index * partition_size
-        bin_end = min(bin_start + partition_size, 100)
+        bin_counts[bin_start] += 1
         
-        # Format the label, e.g., "5% - 10%"
-        bin_label = f"{bin_start}% - {bin_end}%"
+    # Create sorted list of (start_percent, count) tuples
+    sorted_bins = sorted(bin_counts.items())
+    print(sorted_bins[-1])
+    return sorted_bins
+
+
+def create_cumulative_distribution(sorted_bins, total_segments):
+    """
+    Converts the sorted histogram bins into cumulative PERCENTAGES.
+    """
+    cumulative_percentages = {}
+    current_cumulative_count = 0
+    
+    if total_segments == 0:
+        return cumulative_percentages
+
+    for start_percent, count in sorted_bins:
+        current_cumulative_count += count
         
-        bin_counts[bin_label] += 1
+        # Calculate the cumulative percentage
+        cumulative_pct = (current_cumulative_count / total_segments) * 100
         
-    return dict(sorted(bin_counts.items()))
+        # The x-axis point for a CDF is the END of the bin (e.g., 5%, 10%, etc.)
+        end_percent = min(start_percent + PARTITION_SIZE_PERCENT, 100)
+        
+        # Store the cumulative percentage at the bin's end point
+        cumulative_percentages[end_percent] = cumulative_pct
+        
+    return cumulative_percentages
+
+
+def plot_cumulative_distribution(cumulative_percentages, output_file):
+    """
+    Generates and saves a line plot of the Cumulative Distribution Function (CDF)
+    with the Y-axis scaled to a percentage.
+    """
+    if not cumulative_percentages:
+        print("No data to plot.")
+        return
+
+    # Prepare x (percentage) and y (cumulative percentage) values
+    percentages = sorted(cumulative_percentages.keys())
+    cumulative_pcts = [cumulative_percentages[p] for p in percentages]
+
+    # Prepend (0, 0) for a proper CDF start
+    percentages.insert(0, 0)
+    cumulative_pcts.insert(0, 0)
+
+    plt.figure(figsize=(10, 6))
+    
+    # Create the CDF line plot
+    plt.plot(percentages, cumulative_pcts, marker='o', linestyle='-', color='purple', linewidth=2)
+
+    # Add labels and title
+    plt.title('CDF of Valid Blocks per Segment in F2FS (SQLite-Journal; Zipfian workload)', fontsize=16)
+    plt.xlabel('Valid Block Percentage (%)', fontsize=12)
+    plt.ylabel('Cumulative Percentage of Segments (%)', fontsize=12) # Y-axis changed
+    
+    # Set axis limits
+    plt.xlim(0, 100)
+    plt.ylim(0, 100) # Y-axis max set to 100%
+    
+    # Add a horizontal line at 100%
+    plt.axhline(y=100, color='gray', linestyle='--', linewidth=1)
+    
+    plt.grid(True, linestyle='--', alpha=0.6)
+    plt.tight_layout()
+    plt.savefig(output_file)
+    plt.close()
+
 
 def main():
     """
     Main function to handle argument parsing and execution flow.
     """
     
-    # Set up argument parser
     parser = argparse.ArgumentParser(
-        description="F2FS Segment Summary Parser and VBlock Histogram Generator.",
+        description="F2FS Segment Summary Parser and VBlock Histogram/CDF Generator.",
         formatter_class=argparse.RawTextHelpFormatter
     )
     
@@ -137,47 +161,42 @@ def main():
     args = parser.parse_args()
     file_name = args.file
 
-    print(f"🔬 Starting F2FS Segment Summary Parsing...")
-    print(f"📂 Attempting to read data from: **{file_name}**")
-    print("---")
-
-    # Step 1 & 2: Parse and Filter
+    print(f"🔬 Starting F2FS Segment Summary Parser...")
+    print(f"📂 Reading data from: **{file_name}**")
+    
+    # 1. Parse and Filter
     vblock_percentages, total_lines = parse_f2fs_summary(file_name)
     
     if vblock_percentages is None:
-        return # Exit on file error
+        return 
 
-    print(f"Total lines read from file: {total_lines}")
-    print(f"✅ Found **{len(vblock_percentages)}** qualifying segments after filtering.")
-    print(f"   (Filters: seg_type in (0, 1, 2) AND mtime > 0)")
+    total_segments = len(vblock_percentages)
+    print(f"Total lines read: {total_lines}")
+    print(f"✅ Found {total_segments} qualifying segments (type in 0, 1, 2).")
     
     if not vblock_percentages:
-        print("---")
-        print("🛑 No segments matched the filtering criteria. Exiting.")
+        print("🛑 No segments matched the criteria. Exiting.")
         return
 
-    print("---")
-
-    # Step 3: Create Histogram
-    histogram = create_histogram(vblock_percentages, PARTITION_SIZE_PERCENT)
-
-    ## 📊 VBlock Percentage Histogram ##
     
-    # Create a table/visual representation of the histogram
-    print(f"Histogram (Valid Blocks Percentage) - Bin Size: {PARTITION_SIZE_PERCENT}%")
-    print("{:<12} | {:<5}".format("Bin Range", "Count"))
-    print("-" * 20)
-    for bin_range, count in histogram.items():
-        print("{:<12} | {:<5}".format(bin_range, count))
+    # 2. Create Histogram (raw bins)
+    sorted_bins = create_histogram(vblock_percentages, PARTITION_SIZE_PERCENT)
 
-    # Simple visualization
-    max_count = max(histogram.values()) if histogram else 0
-    if max_count > 0:
-        print("\n[Simple Bar Chart]")
-        for bin_range, count in histogram.items():
-            # Scale to 20 characters for visualization
-            bar = "█" * int((count / max_count) * 20)
-            print(f"{bin_range}: {bar} ({count})")
+    # 3. Create Cumulative Distribution (in percentage)
+    cumulative_percentages = create_cumulative_distribution(sorted_bins, total_segments)
+    
+    # 4. Plot Cumulative Distribution
+    plot_cumulative_distribution(cumulative_percentages, OUTPUT_CDF_IMAGE_FILE)
+    print(f"\n🖼️ Cumulative Distribution Plot (as percentage) generated and saved to: {OUTPUT_CDF_IMAGE_FILE}")
+    
+    # Display the final cumulative distribution table
+    print("\n📈 Final Cumulative Distribution Table (Percentage of Total Segments):")
+    print("{:<12} | {:<5}".format("VBlock % <=", "Cumulative %"))
+    print("-" * 28)
+    for percent, cumulative_pct in cumulative_percentages.items():
+        # Displaying percentage with 2 decimal places
+        print("{:<12} | {:<5.2f}%".format(f"{percent}%", cumulative_pct))
+
 
 if __name__ == "__main__":
     main()
